@@ -98,5 +98,5 @@ crear un '.gitignore'
     __pycache__
     staticfiles
 git add .
-
+git commit -m "primer commit"
 
