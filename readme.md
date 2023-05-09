@@ -161,3 +161,7 @@ Instalar 'gunicorn' en la consola normal:
     pip install gunicorn
 Volver a crear el 'requirements.txt', para agregarlo:
     pip freeze > requirements.txt
+
+Cear repositorio en github:
+    git remote add origin https://github.com/jav2074/python-django-rest-framework-crud.git
+    git push -u origin main
