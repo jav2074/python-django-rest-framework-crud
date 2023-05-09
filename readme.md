@@ -100,3 +100,64 @@ crear un '.gitignore'
 git add .
 git commit -m "primer commit"
 
+GUIA RENDER:
+https://render.com/docs/deploy-django - Go Production-Ready
+En 'settings.py' agregar:
+    import os
+    import dj_database_url
+Actualizar:
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+DEBUG = 'RENDER' not in os.environ
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+New PostgreSQL - Agregar la BD en render:
+name y database 'pdrf_crud'
+
+por consola ejecuto:
+pip install dj-database-url psycopg2-binary
+
+importo 'dj-database-url'
+
+lo agrego en:
+DATABASES = {
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
+}
+
+Static Files:
+pip install whitenoise[brotli]
+Agregar:
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',    ...
+]
+Agregar:
+    if not DEBUG:
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+        STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+Create a Build Script:
+    #!/usr/bin/env bash
+    # exit on error
+    set -o errexit
+
+    pip install -r requirements.txt
+
+    python manage.py collectstatic --no-input
+    python manage.py migrate
+
+Crear el 'requirements.txt':
+    pip freeze > requirements.txt
+
+En la consola 'git bash':
+    chmod a+x build.sh
+
+Instalar 'gunicorn' en la consola normal:
+    pip install gunicorn
+Volver a crear el 'requirements.txt', para agregarlo:
+    pip freeze > requirements.txt
