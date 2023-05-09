@@ -165,3 +165,14 @@ Volver a crear el 'requirements.txt', para agregarlo:
 Cear repositorio en github:
     git remote add origin https://github.com/jav2074/python-django-rest-framework-crud.git
     git push -u origin main
+
+En 'https://github.com/settings/installations' - Applications
+en Render.com:
+name: ''
+Build Command: './buidl.sh'
+Start Command: 'gunicorn pdrf_crud.wsgi'
+
+en Enviroment, crear las variables de entorno:
+DATABASE_URL	'Internal Database URL' generada en la BD
+SECRET_KEY
+PYTHON_VERSION  '3.8.2'
